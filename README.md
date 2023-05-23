@@ -14,10 +14,6 @@ These instructions will get a copy of the project up and running on your local b
 
 Install a Pi Pico W in a recordable push button according to the instructions on [the Hackaday.io page](https://hackaday.io/project/190629-the-positivity-pusher). 
 
-```
-Give examples
-```
-
 ### Installing
 
 With your Pi Pico W installed into the recordable button, plug it into your computer. It should mount as a drive. Drag the UF2 file to the drive and you will have all the necessary code.
