@@ -34,7 +34,7 @@ We use [RomVer](https://github.com/romversioning/romver) for versioning. For the
 ## Authors
 
 * **Steph Nelson** - *Initial work* - [studiostephe](https://github.com/studiostephe)
-* **Mx. Jack Nelson** - *Contributor** - [mxjacknelson](https://github.com/mxjacknelson)
+* **Mx. Jack Nelson** - *Contributor* - [mxjacknelson](https://github.com/mxjacknelson)
 
 ## License
 
