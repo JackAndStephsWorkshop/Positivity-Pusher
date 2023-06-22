@@ -1,0 +1,6 @@
+Adafruit CircuitPython 8.1.0-dirty on 2023-06-21; Raspberry Pi Pico W with rp2040
+Board ID:raspberry_pi_pico_w
+UID:E661640843356629
+MAC:28:CD:C1:0D:AF:05
+boot.py output:
+readonly false

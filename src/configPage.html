@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Welcome!</title>
+				<style>
+			* {
+  			box-sizing: border-box;
+			}
+			
+			body {
+			  font-family: Poppins, sans-serif;
+			  margin: 0;
+			  padding: 0;
+			  overflow: hidden;
+			}
+
+
+			.background {
+			  position: fixed;
+			  top: 0;
+			  left: 0;
+			  right: 0;
+			  bottom: 0;
+			  z-index: -1;
+			  background: linear-gradient(135deg, #f6d365, #fda085);
+			}
+
+			.container {
+			  position: fixed;
+			  top: 0;
+			  width: 100vw;
+			  bottom: 0;
+			  overflow-y: auto;
+			  padding: 2vh 0;
+			  color: #fff;
+			  display: flex;
+			  flex-direction: column;
+			  align-items: center;
+			}
+			.messages-container {
+			  display: flex;
+			  flex-direction: column;
+			  align-items: center;
+			  gap: 2vh;
+			  margin-top: 3vh;
+			}
+			
+			
+			form {
+				background: #fff;
+				padding: 3vh 3vw;
+				border-radius: 2vh;
+				box-shadow: 0 0 2.5vh rgba(0, 0, 0, .1);
+				width: 80vw;
+				text-align: left;
+				margin-top: 2vh;
+			}
+
+			h1, h2 {
+				margin: 0 0 3vh;
+				text-transform: uppercase;
+				font-weight: 700;
+				text-align: center;
+		
+			}
+
+			h1 {
+				font-size: calc(5vw + 16px);
+			}
+
+			h2 {
+				  font-size: calc(3vw + 14px);
+
+			}
+
+			label {
+				display: block;
+				margin-bottom: 1vh;
+				font-size: calc(4vw + 16px);
+				color: #f80;
+			}
+			sublabel {
+				display: block;
+				margin-bottom: 1vh;
+				font-size: calc(2vw + 14px);
+				color: #f80;
+			}
+
+			input[type=text], input[type=password], textarea {
+				width: 95%;
+				padding: 1vh;
+				margin-bottom: 1vh;
+				border: .15vh solid #ccc;
+				border-radius: 1vh;
+				font-size: calc(2vw + 14px);
+				color: #f80;
+			}
+
+			.custom-input {
+				width: 30% !important;
+			}
+			
+			.other-custom-input {
+				width: 75% !important;
+			}
+
+			.text-area {
+				width: 85%; /* adjust width as needed */
+			}
+			input[type=submit] {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 100%;
+				padding: 1.5vh;
+				background: linear-gradient(135deg, #f6d365, #fda085);
+				border: none;
+				border-radius: 1vh;
+				font-size: calc(3vw + 14px);
+				font-weight: 700;
+				color: #fff;
+				text-transform: uppercase;
+				cursor: pointer;
+				margin-top: 20px;
+			}
+
+			input[type=submit]:hover {
+				background: linear-gradient(135deg, #f5c761, #fc9a6f);
+			}
+
+			/* Hide the actual checkboxes */
+			#wifi-checkbox,
+			#prompt-checkbox,
+			#settings-checkbox {
+				display: none;
+			}
+
+			/* Adjusted styling for button labels */
+			.checkbox-label {
+			  display: block;
+			  margin-bottom: 1vh;
+			  font-size: calc(3vw + 14px);
+			  color: #fff;
+			  cursor: pointer;
+			  background: linear-gradient(135deg, #f6d365, #fda085); /* Gradient background */
+			  padding: 1vh 2vh;
+			  border-radius: 1vh;
+			  transition: background-color 0.3s ease;
+			  width: 70%; 
+			}
+
+			.checkbox-label:hover {
+			  background: linear-gradient(135deg, #f5c761, #fc9a6f); /* Gradient background on hover */
+			  color: #f80;
+			}
+
+			
+
+			.checkbox-label:hover::before {
+			  background-color: #f80;
+			}
+
+			/* Style the custom checkbox when the actual checkbox is checked */
+			#wifi-checkbox:checked + .checkbox-label:before,
+			#prompt-checkbox:checked + .checkbox-label:before, 
+			#settings-checkbox:checked + .checkbox-label:before {
+				border-color: #f80;
+				background-color: #f80;
+			}
+
+			/* Hide the WiFi and Prompt fields by default */
+			.wifi-fields,
+			.prompt-fields, 
+			.settings-fields {
+				display: none;
+			}
+
+			/* Show the WiFi and Prompt fields when the checkboxes are checked */
+			#wifi-checkbox:checked ~ .wifi-fields,
+			#prompt-checkbox:checked ~ .prompt-fields,
+			#settings-checkbox:checked ~ .settings-fields {
+				display: block;
+			}
+
+			/* Adjust the position of the custom checkbox */
+			.checkbox-label:before {
+				transform: translateY(-50%);
+			}
+			.volume-fields input[type=radio],
+				.battery-fields input[type=radio] {
+				display: inline-block;
+			}
+
+			.volume-fields sublabel,
+			.battery-fields sublabel,
+			.context-length-fields sublabel,
+			.context-length-fields input[type=number],
+			.temperature-fields sublabel,
+			.temperature-fields input[type=number]   {
+				display: inline-block;
+				margin-right: 1.5rem; /* space after the label */
+			}
+			input[type=range] {
+				-webkit-appearance: none;
+				height: 10px;
+				border-radius: 5px;
+				background: #ccc;
+				outline: none;
+			}
+
+			input[type=range]::-webkit-slider-thumb {
+				-webkit-appearance: none;
+				appearance: none;
+				width: 20px;
+				height: 20px;
+				border-radius: 50%;
+				background: #f80;
+				cursor: pointer;
+			}
+			.api-keys-container {
+				display: flex;
+			}
+
+			.api-key-field {
+				margin-right: 2rem;
+			}
+			
+			/* Hide the default radio button */
+			input[type=radio] {
+			  position: absolute;
+			  visibility: hidden;
+			}
+			
+			input[type="radio"] + label {
+			  padding-left: 25px;
+			  height: 20px;
+			  display: inline-block;
+			  position: relative;
+			  font-size: calc(2vw + 12px); /* adjust this value to your preference */
+			}
+
+			/* Create a new custom radio button */
+			input[type=radio] + label:before {
+			  content: '';
+			  display: inline-block;
+			  width: 20px;
+			  height: 20px;
+			  border: 2px solid #f80;
+			  border-radius: 50%;
+			  margin-right: 10px;
+			}
+			
+
+
+
+			/* Style for checked state */
+			input[type=radio]:checked + label:before {
+			  background-color: #f80;
+			}
+
+
+
+			
+			.recent-messages,
+			.favorite-messages {
+			  background-color: #fff;
+			  padding: 2vh;
+			  border-radius: 2vh;
+			  box-shadow: 0 0 2.5vh rgba(0, 0, 0, 0.1);
+			  color: #f80;
+			  width: 80vw;
+			  margin-top: 1vh;
+			}
+			.recent-messages p, .favorite-messages p {
+  			font-size: calc(2vw + 12px); /* adjust as needed */
+			}
+
+			.recent-messages .message-block,
+			.favorite-messages .message-block {
+			  margin-bottom: 1vh;
+			}
+			
+			.recent-messages h3, .favorite-messages h3 {
+  			font-size: calc(3vw + 14px); /* adjust as needed */
+			margin-top: 1vh;
+			}
+			
+			.favorite-messages {
+ 			 margin-top: 2vh;
+			}
+		
+		  }
+		</style>
+	</head>
+	<body>
+  <div class="background"></div>
+  <div class="container">
+    <h1>Welcome!</h1>
+    <h2>Let's Configure Your Button:</h2>
+    <form method="post" action="/">
+      <input type="checkbox" id="wifi-checkbox">
+      <label for="wifi-checkbox" class="checkbox-label">Configure WiFi</label>
+      <div class="wifi-fields">
+        <sublabel for="network_name">Network name:</label>
+        <input type="text" id="network_name" name="network_name">
+        <sublabel for="network_password">Password:</label>
+        <input type="password" id="network_password" name="network_password">
+      </div>
+      <input type="checkbox" id="prompt-checkbox">
+      <label for="prompt-checkbox" class="checkbox-label">Customize your prompt</label>
+      <div class="prompt-fields">
+    <sublabel for="name">"Give an affirmation to 
+    <br><input type="text" class="custom-input" id="name" name="name" placeholder="{name}"> <input type="text" class="custom-input" id="pronouns" name="pronouns" placeholder="{pronouns}"> 
+    <br>on the topic of 
+    <br><input type="text" class="other-custom-input" id="topic" name="topic" placeholder="{topic}">."
+    </label>
+  
+      </div>
+      <input type="checkbox" id="settings-checkbox">
+      <!-- <label for="settings-checkbox" class="checkbox-label">Advanced Settings</label>
+      <div class="settings-fields">
+        <div class="volume-fields">
+          <div style="display: flex; align-items: center;">
+            <sublabel for="volume" style="margin-right: 1rem;">Volume:</sublabel>
+            <div style="flex-grow: 1;">
+              <sublabel style="margin: 0;">Low</sublabel>
+              <input type="range" id="volume" name="volume" min="0" max="100" value="{volume}" style="width: 30%;">
+              <sublabel style="margin: 0;">High</sublabel>
+            </div>
+          </div>
+        </div>
+        
+	<div class="context-length-fields">
+		<sublabel for="context_length">Context Length:</sublabel>
+		<input type="number" id="context_length" name="context_length" min="2" step="2" max="40" value="{context_length}">
+	</div>
+	<div class="temperature-fields">
+		<sublabel for="temperature">Temperature:</sublabel>
+		<input type="number" id="temperature" name="temperature" min="0" step="0.05" max="1.3" value="{temperature}">
+	</div>
+      </div>
+      <div class="settings-fields">
+        <div class="api-keys-container">
+          <div class="api-key-field">
+            <sublabel for="openai-api-key">OpenAI API Key:</sublabel>
+            <input type="text" id="openai-api-key" name="openai-api-key">
+          </div>
+          <div class="api-key-field">
+            <sublabel for="azure-api-key">Azure API Key:</sublabel>
+            <input type="text" id="azure-api-key" name="azure-api-key">
+          </div>
+        </div>
+      </div>
+      -->
+      <div class="battery-fields">
+		<sublabel>Battery type:</sublabel><br>
+<input type="radio" id="battery_type_alkaline" name="battery_type" value="alkaline" {alkaline_checked}>
+<label for="battery_type_alkaline">Alkaline</label>
+
+		<input type="radio" id="battery_type_lithium" name="battery_type" value="lithium" {lithium_checked}>
+<label for="battery_type_lithium">Lithium</label>
+
+		<input type="radio" id="battery_type_rechargeable" name="battery_type" value="rechargeable" {rechargeable_checked}>
+		<label for="battery_type_rechargeable">Rechargeable</sublabel>
+		<br>
+	</div>
+      <input type="submit" value="Submit">
+    </form>
+    <div class="messages-container">
+      <div class="recent-messages">
+        <h3>Recent Messages</h3>
+        <div class="message-block">
+          <p>{recent-message}</p>
+        </div>
+        <div class="message-block">
+          <p>{recent-message}</p>
+        </div>
+        <div class="message-block">
+          <p>{recent-message}</p>
+        </div>
+      </div>
+      <div class="favorite-messages">
+        <h3>Favorite Messages</h3>
+        <div class="message-block">
+          <p>{favorite-message}</p>
+        </div>
+        <div class="message-block">
+          <p>{favorite-message}</p>
+        </div>
+        <div class="message-block">
+          <p>{favorite-message}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
