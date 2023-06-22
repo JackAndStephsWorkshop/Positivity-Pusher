@@ -25,7 +25,7 @@ With your Pi Pico W installed into the recordable button, plug it into your comp
 
 ## Contributing
 
-Please read [CODE_OF_CONDUCT.md]() for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
@@ -38,4 +38,4 @@ We use [RomVer](https://github.com/romversioning/romver) for versioning. For the
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
