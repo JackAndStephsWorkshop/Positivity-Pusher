@@ -25,7 +25,7 @@ With your Pi Pico W installed into the recordable button, plug it into your comp
 
 ## Contributing
 
-Please read [CODE-OF-CONDUCT.md]() for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CODE_OF_CONDUCT.md]() for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
