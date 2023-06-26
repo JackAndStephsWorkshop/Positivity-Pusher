@@ -179,6 +179,9 @@ while audio.playing:
 	topButton = digitalio.DigitalInOut(board.GP2)
 	topButton.direction = digitalio.Direction.INPUT
 	topButton.pull = digitalio.Pull.UP
+	led = digitalio.DigitalInOut(board.GP0)
+	led.direction = digitalio.Direction.OUTPUT
+	led.value = True
 	startTime = time.monotonic()
 	# serve the website for 5 minutes, after that, reboot
 	while topButton.value and (time.monotonic() - startTime) < 300:

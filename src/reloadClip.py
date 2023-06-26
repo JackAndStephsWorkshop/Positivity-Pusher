@@ -353,9 +353,12 @@ except Exception as e:
 	else:
 		import traceback
 		print('-reloadClip main try block, exception:', str(traceback.format_exception(e)))
-		with open('crash.txt', 'a') as f:
-			import traceback
-			f.write('\nreloadClip crash:' + ''.join(traceback.format_exception(e)))
+		try:
+			with open('crash.txt', 'a') as f:
+				import traceback
+				f.write('\nreloadClip crash:' + ''.join(traceback.format_exception(e)))
+		except:
+			pass
 		try:
 			led.value=True
 		except:
