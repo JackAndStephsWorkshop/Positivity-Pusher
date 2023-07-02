@@ -10,12 +10,13 @@ topSwitch = digitalio.DigitalInOut(board.GP2)
 topSwitch.direction = digitalio.Direction.INPUT
 topSwitch.pull = digitalio.Pull.UP
 storage.remount("/", readonly=False)
-
+print(os.getenv('OPEN_AI_KEY'))
 if (not topSwitch.value) or (os.getenv('OPEN_AI_KEY') == "Bearer xx-xxxxxxxxx..."): #hold top button for usb host write access, or allow usb host write access if keys are missing
 	storage.remount("/", readonly=True)
-	print('readonly false')
-
-
+	topSwitch.deinit()
+	from playAudio import playAudio
+	if os.getenv('OPEN_AI_KEY') == "Bearer xx-xxxxxxxxx...":
+		playAudio('keys.mp3')
 
 #print('boot!')
 #import usb_cdc

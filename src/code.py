@@ -46,8 +46,16 @@ try:
 			supervisor.reload()
 		
 		elif microcontroller.cpu.reset_reason == microcontroller.ResetReason.POWER_ON or microcontroller.ResetReason.SOFTWARE:
-			playAudio('powerOn.mp3')
-			#pass
+			try:
+				with open("test.txt", "w") as file:
+					file.write('test')
+				playAudio('powerOn.mp3')
+				
+			except:
+				playAudio('file.mp3')
+				while True:
+					pass
+			
 
 except Exception as e:
 	print(e)

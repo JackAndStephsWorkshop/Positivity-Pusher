@@ -10,10 +10,12 @@ def playAudio(clip):
 		
 		from audiomp3 import MP3Decoder
 		theClip = MP3Decoder(clip)	 #set this up first for memory reasons?
-		theClip2 = MP3Decoder(clip)	 #set this up first for memory reasons?
-		theClip.sample_rate = 10000			  # this plays the audio slower because we request the tts at double speed 
-		theClip2.sample_rate = 10000			  # this plays the audio slower because we request the tts at double speed 
-		
+		theClip.sample_rate = 10000			  # this plays the audio slower because we request the tts at double speed
+		try:
+			theClip2 = MP3Decoder(clip)	 
+			theClip2.sample_rate = 10000			 
+		except:
+			pass
 		from audiopwmio import PWMAudioOut as AudioOut
 		import audiomixer
 		mixer = audiomixer.Mixer(buffer_size=1024, voice_count=2, sample_rate=10000, channel_count=1, bits_per_sample=16, samples_signed=True)
@@ -23,8 +25,10 @@ def playAudio(clip):
 		mixer.voice[0].level = 1	
 		mixer.voice[1].level = 1	
 		mixer.voice[0].play(theClip)	
-		mixer.voice[1].play(theClip2)
-
+		try:
+			mixer.voice[1].play(theClip2)
+		except:
+			pass
 		print('playing clip!')
 		while mixer.voice[0].playing:
 			led.value = not led.value #blink the LED
@@ -55,7 +59,11 @@ def playAudio(clip):
 							audio.deinit()
 							return("replay")
 					try:
-						del theClip, theClip2
+						del theClip
+					except:
+						pass
+					try:
+						del theClip2
 					except:
 						pass
 					gc.collect()

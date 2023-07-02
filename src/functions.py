@@ -1,7 +1,42 @@
+def updateCheck():
+	try:
+		import gc
+		from functions import load_json
+		data = load_json()		
+		currentVersion = data['version']
+		print(currentVersion)
+		del data, load_json
+		gc.collect()
+		import ssl
+		import socketpool
+		import adafruit_requests
+		import wifi
+		pool = socketpool.SocketPool(wifi.radio)
+		requests = adafruit_requests.Session(pool, ssl.create_default_context())
+		response = requests.get('https://api.github.com/repos/stephandjacksworkshop/positivity-pusher/releases/latest')
+
+		data = response.json()
+		githubVersion = data["tag_name"]
+		print(githubVersion)
+		if currentVersion != githubVersion:
+			response = requests.get('https://raw.githubusercontent.com/StephAndJacksWorkshop/Positivity-Pusher/main/update.py')
+			update = response.text
+			with open('update.py', 'w') as file:
+				file.write(update)
+			import supervisor
+			supervisor.set_next_code_file('update.py')
+			supervisor.reload()
+		else:	
+			
+			print("got the current version!")
+	except:
+		raise
+		print("couldn't check update")
+		
+		
 def checkBattery():
 	import digitalio, board
 	from analogio import AnalogIn
-	
 	
 	# define the bounds of your range
 	#lower_bound = ...
@@ -22,9 +57,8 @@ def checkBattery():
 	data = load_json()
 	batteryType = data['battery_type']
 
-
 	if vsysVoltage < cutoff[batteryType]:
-
+		
 		from playAudio import playAudio
 		playAudio('lowBattery.mp3')
 		with open('voltage.txt', 'a') as f:
@@ -93,12 +127,14 @@ def update_json(network_name=None, network_password=None, prompt=None, temperatu
 	data = load_json()
 	mode = data.get("current_mode")
 	oldTopic = data['topic']
+	oldName = data['name']
+	oldPronouns = data['pronouns']
 	for key, value in newSettings.items():
 		if value:
 			data[key] = value  # this will update the value of the key if it exists, or create a new key-value pair if it doesn't.
 
 	# if prompt topic is different from before, clear out old messages
-	if data['topic'] != oldTopic:
+	if (data['topic'] != oldTopic) or (data['name'] != oldName) or (data['pronouns'] != oldPronouns):
 		last = data['prompts'][mode]['prompt'].pop()
 		messages = data["prompts"][mode]["prompt"][:2]
 		data['prompts'][mode]['prompt'] = data["prompts"][mode]["prompt"][:2]

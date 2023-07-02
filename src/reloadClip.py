@@ -54,7 +54,9 @@ try:
 			while tries < 5 and success == False:
 				data = load_json()
 				mode = data['current_mode']
-				theBundle = data['prompts'][mode]
+				theBundle = dict(data['prompts'][mode])
+
+				#theBundle = data['prompts'][mode]
 				gc.collect()
 				print('memory after json loaded:', gc.mem_free()/1000,'kb')
 				reminder=''
@@ -92,7 +94,9 @@ try:
 							theBundle['prompt'].insert(-1, new_prompt) #insert random loved message
 						else:
 							print("No loved messages found.")
-			
+				del data
+				gc.collect()
+				
 				badass=37289
 				battle=38471
 				space_battle=3344
@@ -130,7 +134,6 @@ try:
 
 				# replace template holders
 				theBundle["prompt"][-1]['content'] = theBundle["prompt"][-1]['content'].replace('<name>', name).replace('<pronouns>', pronouns).replace('<topic>', topic)
-				
 				# make the actual request to openai
 				pool = socketpool.SocketPool(wifi.radio)
 				requests = adafruit_requests.Session(pool, ssl.create_default_context())
@@ -193,6 +196,8 @@ try:
 				print('updating prompt')
 				gc.collect()
 				contextLength = 10
+				data = load_json()
+
 				user_prompt = data['prompts'][mode]['prompt'].pop() #remove and save the last message
 				system_prompts = data['prompts'][mode]['prompt'][:2]		#save the system and first assistant prompt
 				data['prompts'][mode]['prompt'] = data['prompts'][mode]['prompt'][2:]#remove the system and first assistant prompt
@@ -301,7 +306,7 @@ try:
 			else:
 				print('bad tts status')
 				#raise Exception(f"bad status code on TTS response: {response.status_code}\nthe string was: {payload}")
-			
+		
 		wifiResult = join_wifi()
 		gc.collect()
 		if not wifiResult:
@@ -311,9 +316,17 @@ try:
 		print('joined wifi- free memory:', gc.mem_free()/1000,'kb')
 		success=False
 		loops=0
+		try:
+			led.deinit()
+			del led
+		except:
+			pass
 		from functions import checkBattery
 		checkBattery()
 		del checkBattery
+		led = digitalio.DigitalInOut(board.GP0)
+		led.direction = digitalio.Direction.OUTPUT
+		led.value = True
 		while not success and loops < 2:	#three tries to load the mp3 
 			words = getText() #load the text
 			print('the words:', words)
@@ -330,6 +343,8 @@ try:
 				for i in range(10):
 					led.value = not led.value
 					time.sleep(.1)
+				from functions import updateCheck
+				updateCheck()
 				led.deinit()
 				del led
 				playAudio('chime.mp3')
@@ -350,6 +365,13 @@ except Exception as e:
 		except:
 			pass
 		playAudio('wifiFail.mp3')
+	elif str(e) == "[Errno 30] Read-only filesystem":
+		try:
+			led.deinit()
+			del led
+		except:
+			pass
+		playAudio('file.mp3')
 	else:
 		import traceback
 		print('-reloadClip main try block, exception:', str(traceback.format_exception(e)))
