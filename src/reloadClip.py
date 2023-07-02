@@ -375,6 +375,8 @@ except Exception as e:
 			pass
 		playAudio('file.mp3')
 	else:
+		from functions import updateCheck
+		updateCheck()
 		import traceback
 		print('-reloadClip main try block, exception:', str(traceback.format_exception(e)))
 		try:
