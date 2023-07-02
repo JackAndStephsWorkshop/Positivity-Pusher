@@ -354,6 +354,8 @@ try:
 				print('TRYING AGAIN')
 				loops+=1
 		if not success:
+			from functions import updateCheck
+			updateCheck()
 			raise Exception('tried three times, couldnt get mp3')
 
 except Exception as e:
